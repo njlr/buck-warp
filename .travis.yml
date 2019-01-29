@@ -2,6 +2,17 @@ language: cpp
 
 os:
   - linux
+  - osx
+
+homebrew:
+  taps:
+    - facebook/fb
+  packages:
+    - buck
+
+cache:
+  directories:
+    - $HOME/Library/Caches/Homebrew
 
 env:
   - BUCK_VERSION=2019.01.10.01
@@ -11,6 +22,7 @@ before_install:
 
 script:
   - buck build -c ui.superconsole=DISABLED //:buck-$BUCK_VERSION-$TRAVIS_OS_NAME
+  - buck run -c ui.superconsole=DISABLED //:buck-$BUCK_VERSION-$TRAVIS_OS_NAME
 
 deploy:
   provider: releases

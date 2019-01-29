@@ -8,6 +8,16 @@ http_file(
   sha256 = 'ba5da4d224077fffea78c7872df47413234e4ee179c941c821aae0b33bd9f594',
 )
 
+http_file(
+  name = 'warp-osx',
+  out = 'warp',
+  executable = True,
+  urls = [
+    'https://github.com/dgiagio/warp/releases/download/v0.3.0/macos-x64.warp-packer',
+  ],
+  sha256 = '01d00038dbbe4e5a6e2ca19c1235f051617ac0e6e582d2407a06cec33125044b',
+)
+
 http_archive(
   name = 'openjdk8-linux',
   out = 'out',
@@ -16,6 +26,36 @@ http_archive(
   ],
   sha256 = 'f5a1c9836beb3ca933ec3b1d39568ecbb68bd7e7ca6a9989a21ff16a74d910ab',
   strip_prefix = 'jdk8u202-b08',
+)
+
+http_archive(
+  name = 'openjre8-linux',
+  out = 'out',
+  urls = [
+    'https://github.com/AdoptOpenJDK/openjdk8-binaries/releases/download/jdk8u202-b08/OpenJDK8U-jre_x64_linux_hotspot_8u202b08.tar.gz',
+  ],
+  sha256 = 'b3f9934c6fc83fb2e76a4ded31367e5312013e27d36eac82a6fe1423aae394ce',
+  strip_prefix = 'jdk8u202-b08-jre',
+)
+
+http_archive(
+  name = 'openjdk8-osx',
+  out = 'out',
+  urls = [
+    'https://github.com/AdoptOpenJDK/openjdk8-binaries/releases/download/jdk8u202-b08/OpenJDK8U-jdk_x64_mac_hotspot_8u202b08.tar.gz',
+  ],
+  sha256 = '059f7c18faa6722aa636bbd79bcdff3aee6a6da5b34940b072ea6e3af85bbe1d',
+  strip_prefix = 'jdk8u202-b08',
+)
+
+http_archive(
+  name = 'openjre8-osx',
+  out = 'out',
+  urls = [
+    'https://github.com/AdoptOpenJDK/openjdk8-binaries/releases/download/jdk8u202-b08/OpenJDK8U-jre_x64_mac_hotspot_8u202b08.tar.gz',
+  ],
+  sha256 = 'd7be3dfd5cd10323e1272e06d26f0709fbbc4a6f25a3992c2f2eef7022517fba',
+  strip_prefix = 'jdk8u202-b08-jre',
 )
 
 http_archive(
@@ -41,9 +81,28 @@ genrule(
     'mkdir -p bundle',
     'mkdir -p bundle/bin',
     'cp $SRCDIR/buck.sh ./bundle/buck.sh',
-    'cp -r $(location :openjdk8-linux) ./bundle/jdk',
+    'cp -r $(location :openjre8-linux) ./bundle/jre',
     'cp -r $(location :buck-bottle-2019.01.10.01)/bin/buck ./bundle/bin/buck',
     'chmod +x ./bundle/buck.sh',
     '$(exe :warp-linux) -a linux-x64 -e buck.sh -i ./bundle -o $OUT',
+  ]),
+)
+
+genrule(
+  name = 'buck-2019.01.10.01-osx',
+  out = 'buck-2019.01.10.01-osx',
+  executable = True,
+  srcs = [
+    'buck.sh',
+  ],
+  cmd = ' && '.join([
+    'cd $TMP',
+    'mkdir -p bundle',
+    'mkdir -p bundle/bin',
+    'cp $SRCDIR/buck.sh ./bundle/buck.sh',
+    'cp -r $(location :openjre8-osx)/Contents/Home ./bundle/jre',
+    'cp -r $(location :buck-bottle-2019.01.10.01)/bin/buck ./bundle/bin/buck',
+    'chmod +x ./bundle/buck.sh',
+    '$(exe :warp-osx) -a macos-x64 -e buck.sh -i ./bundle -o $OUT',
   ]),
 )
