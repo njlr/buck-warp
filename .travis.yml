@@ -7,7 +7,7 @@ env:
   - BUCK_VERSION=2019.01.10.01
 
 before_install:
-  - ./travis/before-install-$TRAVIS_OS_NAME.sh
+  - "./travis/before-install-$TRAVIS_OS_NAME.sh"
 
 script:
   - buck build -c ui.superconsole=DISABLED //:buck-$BUCK_VERSION-$TRAVIS_OS_NAME
@@ -15,11 +15,10 @@ script:
 deploy:
   provider: releases
   api_key:
-    secure: OhDMbW5Q10EZUSZfndNTGmLhdbID3/hIlTHRmVz6Iv+S0RBIhV4rpPMOhhtIDR+tc5KPX4fj59okOF7Q8KayL83p3JPS6XE/OUxVljkMJ6tS198YrnvAWZrTffFIBlSKVvNq29f51EO/wfoeCnDf6CIN1MLGJ/CK1jT27+NDKoL9KlELRU3b3uoEpQzt9JvGyKU86w/PVVem8o1pe+cCgQBzpbKCyakp9tzFv/B0Uw5UT2iM1UfgA6E90pDJcpZUO1jumwUQ/WMrkjnwrjJL5LXnKSC8jZJy6B3XWPXG7aOWm9ALrQxL352a7aBjluXTHrTcesmC8Zgt9/HFdvex5eiAJxjPcENtFNd1S5SJsBRaTgY4nYwvGC6SDVtbR8F9/i5uaQ5gMyN2kSG7Ezapu66I/k6CwY/BLqdHhZnkjAVB+5itQkeoe0D+OABJ94+LCP5QK50r+dPI0TV6tacATjDelS3IPeI7+TIbgBYPpvazBcNWMnp07JnuySx+LIuhB4uJ0GZhurUlo01SHfrIcuVSvX5XSUW+VFifUyAsruGEfyiZuLThQAblTMBcH9KFITVkxfhqNzuL1rLL4Z8kY16vNF2mf13Gor/lIuS7gHcc9GhHQftA9P6DlptHsxl2GU8UWXD6XfNVGpQt4iMsO4ASgWYNn5gUzQT0CTK5+r4=
+    secure: g68JPPUJTgr3dKtGDK8yPvt+BMnCRxSPDA9JwvUt9c5sKEp2dQM/7cUdzhnVBuvKnIW0+n0/g8B+nTiNXUOfAqKAozVAOSI+wpTbYTbAzb/rE1dPC+cRmReizsBqmMnYxkaYdmlhaJfq3O4r/nzdWBeGzUokL6vxAijRBYd8PiW4UMMz87guWL20dwtmg9eZRajBm4oqyzr+9SfaePRrO01W0ifRWqRi5mbCezdGrD3/DcayVspIqxnvyMlOU9D64px6lUDy53RQDONGnJ2Zcek2AObEZix8XVtqv4fCmug3xwXZ23IgVGnwjJ8VhxO0WuyYmKb+CMnqZh0XWEhOAGC4o6smwWeQGBSoQq/pVzNfCZaW6lk1Vz6aR++ggACoqRrZqhfWtprTV0AGf7JgNZfpcrU4ksoPUVz3BS2Z1mQwW0NxZkMSgBLKjAGMQJenRUQoGUQapUUYeYwmefG+ZtkNhMDF1fvdmQ9uvfHU14dhmrvyTYkgKI1TXQTc/8uAUSa2PYobL+vtTq+RmkbE1HCDkeYQeFG6tOGgr5EjiYWmXJ64vyWogwKWf51wiauxTZ8KwycmKfBLuHIFN48KpPjOuoiAk7CMbaK8212jkQG++Af1xkNh4VNDerACbge8wCIxhxqXxY+CDpCzA4+tRt+/IEgYoGWLsWgWmntQ528=
   file:
-    - "buck-out/gen/buck-$BUCK_VERSION-linux/buck-$BUCK_VERSION-$TRAVIS_OS_NAME"
+  - buck-out/gen/buck-$BUCK_VERSION-linux/buck-$BUCK_VERSION-$TRAVIS_OS_NAME
   skip_cleanup: true
   on:
     repo: njlr/buck-warp
-
-tags: true
+    tags: true
