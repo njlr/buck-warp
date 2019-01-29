@@ -1,0 +1,4 @@
+.buckd
+buck-out
+.buckconfig.local
+.buckconfig.d
