@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
-export JAVA_HOME=${BASH_SOURCE%/*}/jre;
+BUCK_HOME=${BASH_SOURCE%/*}
 
-${BASH_SOURCE%/*}/bin/buck "$@"
+export JAVA_HOME="$BUCK_HOME/jre";
+
+"$BUCK_HOME/bin/buck" "$@"
