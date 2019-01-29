@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 export JAVA_HOME=${BASH_SOURCE%/*}/jdk;
 
