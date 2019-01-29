@@ -1,5 +1,6 @@
 #!/bin/bash
 
-choco install buck
+choco install -y buck
 
-export JAVA_HOME='c/Program Files/Java/jdk1.8.0_201'
+export JAVA_HOME="/c/Program Files/Java/jdk1.8.0_201"
+export PATH="$JAVA_HOME/bin:$PATH"
