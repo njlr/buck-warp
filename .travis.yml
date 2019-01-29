@@ -25,6 +25,7 @@ before_install:
   - "./travis/before-install-$TRAVIS_OS_NAME.sh"
 
 script:
+  - powershell refreshenv
   - buck build -c ui.superconsole=DISABLED //:buck-$BUCK_VERSION-$TRAVIS_OS_NAME
   - ./buck-out/gen/buck-$BUCK_VERSION-$TRAVIS_OS_NAME/buck-$BUCK_VERSION-$TRAVIS_OS_NAME --version
 
