@@ -25,8 +25,8 @@ before_install:
   - "./travis/before-install-$TRAVIS_OS_NAME.sh"
 
 script:
-  - if [[ "$TRAVIS_OS_NAME" == "windows" ]]; export JAVA_HOME="/c/Program Files/Java/jdk1.8.0_201"    ; fi
-  - if [[ "$TRAVIS_OS_NAME" == "windows" ]]; export PATH="$JAVA_HOME/bin:$PATH"                       ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then export JAVA_HOME="/c/Program Files/Java/jdk1.8.0_201"    ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then export PATH="$JAVA_HOME/bin:$PATH"                       ; fi
   - buck build -c ui.superconsole=DISABLED //:buck-$BUCK_VERSION-$TRAVIS_OS_NAME
   - ./buck-out/gen/buck-$BUCK_VERSION-$TRAVIS_OS_NAME/buck-$BUCK_VERSION-$TRAVIS_OS_NAME --version
 
