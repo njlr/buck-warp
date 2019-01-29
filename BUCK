@@ -19,7 +19,7 @@ http_archive(
 )
 
 http_archive(
-  name = 'buck-bottle',
+  name = 'buck-bottle-2019.01.10.01',
   out = 'out',
   type = 'tar.gz',
   urls = [
@@ -30,8 +30,8 @@ http_archive(
 )
 
 genrule(
-  name = 'buck-linux',
-  out = 'buck',
+  name = 'buck-2019.01.10.01-linux',
+  out = 'buck-2019.01.10.01-linux',
   executable = True,
   srcs = [
     'buck.sh',
@@ -42,7 +42,7 @@ genrule(
     'mkdir -p bundle/bin',
     'cp $SRCDIR/buck.sh ./bundle/buck.sh',
     'cp -r $(location :openjdk8-linux) ./bundle/jdk',
-    'cp -r $(location :buck-bottle)/bin/buck ./bundle/bin/buck',
+    'cp -r $(location :buck-bottle-2019.01.10.01)/bin/buck ./bundle/bin/buck',
     'chmod +x ./bundle/buck.sh',
     '$(exe :warp-linux) -a linux-x64 -e buck.sh -i ./bundle -o $OUT',
   ]),
