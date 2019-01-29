@@ -1,3 +1,9 @@
-BUCK_HOME=%~dp0
+@echo off
 
-setx JAVA_HOME "%BUCK_HOME%\jre" /m
+setlocal EnableDelayedExpansion
+
+set BUCK_HOME=%~dp0
+
+set JAVA_HOME=%BUCK_HOME%jre
+
+python %BUCK_HOME%bin\buck
