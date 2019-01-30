@@ -18,6 +18,16 @@ http_file(
   sha256 = '01d00038dbbe4e5a6e2ca19c1235f051617ac0e6e582d2407a06cec33125044b',
 )
 
+http_file(
+  name = 'warp-windows',
+  out = 'warp.exe',
+  executable = True,
+  urls = [
+    'https://github.com/dgiagio/warp/releases/download/v0.3.0/windows-x64.warp-packer.exe',
+  ],
+  sha256 = '4f9a0f223f0e9f689fc718fdf86a147a357921ffa69c236deadc3274091070c1',
+)
+
 http_archive(
   name = 'openjdk8-linux',
   out = 'out',
@@ -57,6 +67,17 @@ http_archive(
   sha256 = 'd7be3dfd5cd10323e1272e06d26f0709fbbc4a6f25a3992c2f2eef7022517fba',
   strip_prefix = 'jdk8u202-b08-jre',
 )
+
+http_archive(
+  name = 'openjre8-windows',
+  out = 'out',
+  urls = [
+    'https://github.com/AdoptOpenJDK/openjdk8-binaries/releases/download/jdk8u202-b08/OpenJDK8U-jre_x64_windows_hotspot_8u202b08.zip',
+  ],
+  sha256 = '6689bc1d726969e95976c7d8f6ae1730abcb31d2d0c3e2d1489a0bacd7867ab7',
+  strip_prefix = 'jdk8u202-b08-jre',
+)
+
 
 http_archive(
   name = 'buck-bottle-2019.01.10.01',
@@ -104,5 +125,31 @@ genrule(
     'cp -r $(location :buck-bottle-2019.01.10.01)/bin/buck ./bundle/bin/buck',
     'chmod +x ./bundle/buck.sh',
     '$(exe :warp-osx) -a macos-x64 -e buck.sh -i ./bundle -o $OUT',
+  ]),
+)
+
+genrule(
+  name = 'buck-2019.01.10.01-windows',
+  out = 'buck-2019.01.10.01-windows.exe',
+  executable = True,
+  srcs = [
+    'buck.bat',
+  ],
+  cmd = ' && '.join([
+    'cd $TMP',
+    'mkdir -p bundle',
+    'mkdir -p bundle/bin',
+    'cp $SRCDIR/buck.bat ./bundle/buck.bat',
+    'cp -r $(location :openjre8-windows) ./bundle/jre',
+    'cp -r $(location :buck-bottle-2019.01.10.01)/bin/buck ./bundle/bin/buck',
+    '$(exe :warp-windows) -a windows-x64 -e buck.bat -i ./bundle -o $OUT',
+  ]),
+  cmd_exe = ' & '.join([
+    'cd $TMP',
+    'mkdir "bundle/bin"',
+    'cp $SRCDIR/buck.bat ./bundle/buck.bat',
+    'cp -r $(location :openjre8-windows) ./bundle/jre',
+    'cp -r $(location :buck-bottle-2019.01.10.01)/bin/buck ./bundle/bin/buck',
+    '$(exe :warp-windows) -a windows-x64 -e buck.bat -i ./bundle -o $OUT',
   ]),
 )
